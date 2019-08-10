@@ -1,3 +1,5 @@
+# Everything is copyright Mark Slee until I figure out how the licensing works!
+
 [![CircleCI](https://circleci.com/gh/heronarts/LX/tree/master.svg?style=svg)](https://circleci.com/gh/heronarts/LX/tree/master)
 
 **BY DOWNLOADING OR USING THE LX SOFTWARE OR ANY PART THEREOF, YOU AGREE TO THE TERMS AND CONDITIONS OF THE [LX STUDIO SOFTWARE LICENSE AND DISTRIBUTION AGREEMENT](http://lx.studio/license).**
