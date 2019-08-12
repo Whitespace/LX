@@ -63,6 +63,9 @@ public class PulsePattern extends LXPattern {
       } else {
         colors[p.index] = black;
       }
+
+      // set everything to white for debugging
+      // colors[p.index] = LXColor.hsb(0, 0, 100);
     }
 
     previous_t = t;

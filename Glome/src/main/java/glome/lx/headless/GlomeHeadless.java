@@ -21,7 +21,9 @@ package glome.lx.headless;
 import glome.lx.model.GlomeModel;
 import java.io.File;
 import heronarts.lx.LX;
+import heronarts.lx.LXChannel;
 import heronarts.lx.LXPattern;
+import heronarts.lx.*;
 import heronarts.lx.model.LXModel;
 import heronarts.lx.output.ArtNetDatagram;
 import heronarts.lx.output.LXDatagramOutput;
@@ -74,10 +76,39 @@ public class GlomeHeadless {
 
       addArtNetOutput(lx);
 
-      // TODO: confirm I can set multiple patterns here
-      lx.setPatterns(new LXPattern[] {
-        new PulsePattern(lx)
-      });
+      // Patterns
+      lx.registerPattern(PulsePattern.class);
+      lx.registerPattern(PatternTumbler.class);
+      lx.registerPattern(PatternVortex.class);
+      lx.registerPattern(PatternBorealis.class);
+
+      // Colors
+      lx.registerPattern(Plasma.class);
+
+      // read from lxp file
+      File projectFile = null;
+      for (String arg : args) {
+        if (arg.endsWith(".lxp")) {
+          projectFile = new File(arg);
+          if (!projectFile.exists()) {
+            System.err.println("Project file not found: " + projectFile);
+            projectFile = null;
+          }
+        }
+      }
+
+      lx.openProject(projectFile);
+
+      for (LXChannelBus channelBus : lx.engine.getChannels()) {
+        LXChannel channel = (LXChannel)channelBus;
+        System.out.println("Channel " + channel.getIndex());
+        System.out.println("- "+channel.getPatterns().size()+" patterns");
+        System.out.println("- enabled: "+channel.enabled.isOn());
+        System.out.println("- selected: "+channel.selected.isOn());
+        // System.out.println("- blendMode: "+channel.blendMode.getLabel());
+        // System.out.println("- blendMode: "+channel.blendMode.getName());
+        // System.out.println("- blendMode: "+channel.blendMode.toString());
+      }
 
       lx.engine.start();
     } catch (Exception x) {
